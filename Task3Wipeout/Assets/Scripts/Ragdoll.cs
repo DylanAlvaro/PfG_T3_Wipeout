@@ -23,8 +23,10 @@ public class Ragdoll : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        foreach (Rigidbody rb in rigidbodies) 
+        foreach(Rigidbody rb in rigidbodies)
+        {
             rb.isKinematic = false;
-        
+            
+        }
     }
 }

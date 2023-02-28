@@ -12,12 +12,17 @@ public class CharacterMover : MonoBehaviour
 
     public Transform cam;
 
-    private CharacterController characterController;
+    [SerializeField] private CharacterController characterController;
+    private Ragdoll ragdoll;
+
+    private Vector3 spawnPoint = new Vector3(-20.4f, 6.30f, -24.75f);
+
     private Animator animator;
     private Vector2 moveInput = new Vector2();
     private bool jumpInput;
 
     public bool isGrounded = false;
+    
     
     // Start is called before the first frame update
     void Awake()
@@ -89,7 +94,24 @@ public class CharacterMover : MonoBehaviour
             }
         }
 
-       transform.forward = camForward;
+        if(ragdoll != null)
+        {
+            ragdoll.ragdollOn = true;
+            StartCoroutine(Respawn_Coroutine());
+            characterController.enabled = false;
+        }
+        
+        IEnumerator Respawn_Coroutine()
+        {
+            yield return new WaitForSeconds(3.5f);
+
+            ragdoll.ragdollOn = false;
+            characterController.enabled = true;
+            gameObject.transform.position = spawnPoint;
+      
+        }
+        
+        transform.forward = camForward;
         
         //delta += velocity * Time.fixedDeltaTime;
 

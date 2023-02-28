@@ -10,12 +10,14 @@ public class CameraController : MonoBehaviour
 {
     private float camSpeed = 360;
     public float distance = 5;
-    public Transform cam;
     public Transform target;
     public float currentDistance;
 
+    public Ragdoll ragdoll;
 
     public float heightOffset = 1.5f;
+    
+   
     
     private Vector2 moveInput = new Vector2();
    
@@ -23,7 +25,6 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cam = Camera.main.transform;
         currentDistance = distance;
     }
 
@@ -51,14 +52,25 @@ public class CameraController : MonoBehaviour
         else
         {
             currentDistance = Mathf.MoveTowards(currentDistance, distance, Time.deltaTime);
+            //characterController.enabled = false;
         }
 
         transform.position = GetTargetPosition() - distance * transform.forward;
+        
+        
+        
     }
     
 
     Vector3 GetTargetPosition()
     {
-        return target.position + heightOffset * Vector3.up;
+        if(target.GetComponent<Ragdoll>().ragdollOn)
+        {
+           return target.GetChild(0).GetChild(1).transform.position + heightOffset * Vector3.up;
+        }
+        else
+        { 
+            return target.position + heightOffset * Vector3.up;
+        }
     }
 }
