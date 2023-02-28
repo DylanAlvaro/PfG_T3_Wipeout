@@ -4,7 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - CP
+  - CheckPoint1
+  - CheckPoint2
   layers:
   - Default
   - TransparentFX
