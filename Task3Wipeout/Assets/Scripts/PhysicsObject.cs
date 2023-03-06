@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PhysicsObject : MonoBehaviour
+public class  PhysicsObject : MonoBehaviour
 {
     public Material awakeMaterial = null;
     public Material asleepMaterial = null;

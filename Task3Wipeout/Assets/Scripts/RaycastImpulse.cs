@@ -1,10 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+
+using UnityEditor;
+
 using UnityEngine;
 
 public class RaycastImpulse : MonoBehaviour
 {
     public float hitForce = 500;
+    public Ray ray;
+    public Vector3 offset;
     
     // Start is called before the first frame update
     void Start()
@@ -17,20 +23,24 @@ public class RaycastImpulse : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            ray = new Ray(transform.position + offset, transform.forward);
 
             RaycastHit hitPoint;
             
-            if (Physics.Raycast(ray, out hitPoint, 500))
+           
+            
+            if (Physics.Raycast(ray, out hitPoint, 1000))
             {
-                Ragdoll ragdoll = hitPoint.collider.GetComponentInParent<Ragdoll>();
-                if (ragdoll != null)
-                    ragdoll.ragdollOn = true;
-
                 Rigidbody rb = hitPoint.collider.GetComponent<Rigidbody>();
                 if(rb != null)
                     rb.AddForce(ray.direction * hitForce);
             }
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(ray);
     }
 }

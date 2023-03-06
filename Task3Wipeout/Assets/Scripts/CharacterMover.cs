@@ -12,6 +12,8 @@ public class CharacterMover : MonoBehaviour
 
     public Transform cam;
 
+    public Transform target;
+    
     [SerializeField] private CharacterController characterController;
     private Ragdoll ragdoll;
 
@@ -51,6 +53,21 @@ public class CharacterMover : MonoBehaviour
 
     private void FixedUpdate()
     {
+        
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            if(ragdoll != null)
+            { 
+                ragdoll.ragdollOn = true;
+            }
+            else
+            { 
+                gameObject.transform.position = spawnPoint; 
+                characterController.enabled = true; 
+                animator.enabled = true;
+            }
+        }
+        
         //jumpVelocity = Mathf.Sqrt(2 * Physics.gravity.magnitude * jumpVelocity);
 
         Vector3 delta;
@@ -94,30 +111,34 @@ public class CharacterMover : MonoBehaviour
             }
         }
 
-        if(ragdoll != null)
-        {
-            ragdoll.ragdollOn = true;
-            StartCoroutine(Respawn_Coroutine());
-            characterController.enabled = false;
-        }
         
-        IEnumerator Respawn_Coroutine()
-        {
-            yield return new WaitForSeconds(3.5f);
 
-            ragdoll.ragdollOn = false;
-            characterController.enabled = true;
-            gameObject.transform.position = spawnPoint;
-      
-        }
-        
-        transform.forward = camForward;
+        //if(ragdoll.ragdollOn)
+        //    transform.forward = -camForward;
+        //if(!ragdoll.ragdollOn)
+        //    transform.forward = camForward;
+       //
         
         //delta += velocity * Time.fixedDeltaTime;
 
         characterController.Move(velocity * Time.deltaTime);
         isGrounded = characterController.isGrounded;
     }
-    
+
+   //private IEnumerator RespawnCoroutine()
+   // {
+   //     yield return new WaitForSeconds(2.5f);
+   //     
+   //         if(ragdoll != null)
+   //         { 
+   //             ragdoll.ragdollOn = false;
+   //         }
+   //         else
+   //         { 
+   //             gameObject.transform.position = spawnPoint; 
+   //             characterController.enabled = true; 
+   //             animator.enabled = true;
+   //         }
+   // }
    
 }
