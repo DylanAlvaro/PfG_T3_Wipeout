@@ -27,8 +27,6 @@ public class RaycastImpulse : MonoBehaviour
 
             RaycastHit hitPoint;
             
-           
-            
             if (Physics.Raycast(ray, out hitPoint, 1000))
             {
                 Rigidbody rb = hitPoint.collider.GetComponent<Rigidbody>();
