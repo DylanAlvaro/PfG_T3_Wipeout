@@ -10,6 +10,9 @@ public class Ragdoll : MonoBehaviour
     private Animator animator = null;
     public List<Rigidbody> rigidbodies = new List<Rigidbody>();
 
+    private CharacterController characterController;
+    public Vector3 spawnPoint = new Vector3(-20.4f, 6.30f, -24.75f);
+    
     public bool ragdollOn
     {
         get { return !animator.enabled;}

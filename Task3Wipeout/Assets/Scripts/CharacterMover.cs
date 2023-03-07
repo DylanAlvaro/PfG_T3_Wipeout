@@ -17,14 +17,15 @@ public class CharacterMover : MonoBehaviour
     [SerializeField] private CharacterController characterController;
     private Ragdoll ragdoll;
 
-    private Vector3 spawnPoint = new Vector3(-20.4f, 6.30f, -24.75f);
+    public Vector3 spawnPoint = new Vector3(-28.67f, 6.33f, -22.56f);
 
     private Animator animator;
     private Vector2 moveInput = new Vector2();
     private bool jumpInput;
 
     public bool isGrounded = false;
-    
+
+    public GameObject UI;
     
     // Start is called before the first frame update
     void Awake()
@@ -116,7 +117,7 @@ public class CharacterMover : MonoBehaviour
         //if(ragdoll.ragdollOn)
         //    transform.forward = -camForward;
         //if(!ragdoll.ragdollOn)
-        //    transform.forward = camForward;
+         transform.forward = camForward;
        //
         
         //delta += velocity * Time.fixedDeltaTime;
@@ -124,21 +125,27 @@ public class CharacterMover : MonoBehaviour
         characterController.Move(velocity * Time.deltaTime);
         isGrounded = characterController.isGrounded;
     }
+    
+   private void OnTriggerEnter(Collider other)
+   {
+       if(other.CompareTag("Player"))
+       {
+           if(Input.GetKeyDown(KeyCode.Z))
+           {
+               if(ragdoll != null)
+               { 
+                   ragdoll.ragdollOn = true;
+                   UI.gameObject.SetActive(false);
+               }
+               else
+               { 
+                   UI.gameObject.SetActive(true);
+                   gameObject.transform.position = spawnPoint; 
+                   characterController.enabled = true; 
+                   animator.enabled = true;
+               }
+           }
 
-   //private IEnumerator RespawnCoroutine()
-   // {
-   //     yield return new WaitForSeconds(2.5f);
-   //     
-   //         if(ragdoll != null)
-   //         { 
-   //             ragdoll.ragdollOn = false;
-   //         }
-   //         else
-   //         { 
-   //             gameObject.transform.position = spawnPoint; 
-   //             characterController.enabled = true; 
-   //             animator.enabled = true;
-   //         }
-   // }
-   
+       }
+   }
 }

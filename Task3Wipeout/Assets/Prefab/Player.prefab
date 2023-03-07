@@ -75,9 +75,11 @@ GameObject:
   - component: {fileID: 196439588689824965}
   - component: {fileID: 7382309863611465421}
   - component: {fileID: 9204825199082191081}
+  - component: {fileID: 362903607}
+  - component: {fileID: 362903610}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -133,7 +135,11 @@ MonoBehaviour:
   jumpVelocity: 5
   velocity: {x: 0, y: 0, z: 0}
   cam: {fileID: 0}
+  target: {fileID: 0}
+  characterController: {fileID: 0}
+  spawnPoint: {x: -20.4, y: 6.3, z: -24.75}
   isGrounded: 0
+  UI: {fileID: 0}
   hitDir: {x: 0, y: 0, z: 0}
 --- !u!95 &7382309863611465421
 Animator:
@@ -179,6 +185,36 @@ MonoBehaviour:
   - {fileID: 848348519}
   - {fileID: 652302215}
   - {fileID: 1639164004}
+  spawnPoint: {x: -20.4, y: 6.3, z: -24.75}
+--- !u!114 &362903607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8162187779723958537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12bca84d13b286f449b3dbefb9cf3cee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitForce: 500
+  offset: {x: 0, y: 1, z: 0}
+--- !u!114 &362903610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8162187779723958537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5ba858f7323f8447913f02c55978b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inCP: 0
+  checkPoints: []
+  checkPoint: {fileID: 0}
 --- !u!1001 &3229870860512302023
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -186,6 +222,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4809700805424003871}
     m_Modifications:
+    - target: {fileID: -7096046715409566479, guid: 2dc526a87c49416478b13f971cef333c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 670ffee1c1383a849ab2ddffc8b03577, type: 2}
+    - target: {fileID: -6921336867825889355, guid: 2dc526a87c49416478b13f971cef333c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 670ffee1c1383a849ab2ddffc8b03577, type: 2}
     - target: {fileID: -6057140222963153312, guid: 2dc526a87c49416478b13f971cef333c, type: 3}
       propertyPath: m_Controller
       value: 

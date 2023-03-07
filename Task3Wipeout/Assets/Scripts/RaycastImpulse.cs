@@ -27,11 +27,15 @@ public class RaycastImpulse : MonoBehaviour
 
             RaycastHit hitPoint;
             
-            if (Physics.Raycast(ray, out hitPoint, 1000))
+            if (Physics.Raycast(ray, out hitPoint, 100))
             {
-                Rigidbody rb = hitPoint.collider.GetComponent<Rigidbody>();
-                if(rb != null)
-                    rb.AddForce(ray.direction * hitForce);
+                if(hitPoint.rigidbody.CompareTag("Door"))
+                {
+                    hitPoint.rigidbody.AddForce(ray.direction * hitForce);
+                }
+                
+               // Rigidbody rb = hitPoint.collider.GetComponent<Rigidbody>();
+               // if(rb != null)
             }
         }
     }

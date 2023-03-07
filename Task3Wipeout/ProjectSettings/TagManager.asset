@@ -4,9 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - CheckPoint1
   - CheckPoint2
   - Door
+  - CheckPoint
   layers:
   - Default
   - TransparentFX
