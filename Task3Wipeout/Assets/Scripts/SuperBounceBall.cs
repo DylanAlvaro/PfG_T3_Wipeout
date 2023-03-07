@@ -8,7 +8,7 @@ public class SuperBounceBall : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         { 
-            other.GetComponent<CharacterMover>().velocity = -other.GetComponent<CharacterMover>().velocity * 10;
+            other.GetComponent<CharacterMover>().velocity = -other.GetComponent<CharacterMover>().velocity * 1.3f;
         }
     }
 }

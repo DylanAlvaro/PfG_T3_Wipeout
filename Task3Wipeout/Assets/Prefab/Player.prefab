@@ -76,7 +76,6 @@ GameObject:
   - component: {fileID: 7382309863611465421}
   - component: {fileID: 9204825199082191081}
   - component: {fileID: 362903607}
-  - component: {fileID: 362903610}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -137,7 +136,8 @@ MonoBehaviour:
   cam: {fileID: 0}
   target: {fileID: 0}
   characterController: {fileID: 0}
-  spawnPoint: {x: -20.4, y: 6.3, z: -24.75}
+  spawnPoint: {x: -28.67, y: 6.33, z: -22.56}
+  respawnPoint: {x: 1.59, y: 6.33, z: 32.8}
   isGrounded: 0
   UI: {fileID: 0}
   hitDir: {x: 0, y: 0, z: 0}
@@ -185,7 +185,6 @@ MonoBehaviour:
   - {fileID: 848348519}
   - {fileID: 652302215}
   - {fileID: 1639164004}
-  spawnPoint: {x: -20.4, y: 6.3, z: -24.75}
 --- !u!114 &362903607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,21 +199,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitForce: 500
   offset: {x: 0, y: 1, z: 0}
---- !u!114 &362903610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8162187779723958537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5ba858f7323f8447913f02c55978b3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inCP: 0
-  checkPoints: []
-  checkPoint: {fileID: 0}
 --- !u!1001 &3229870860512302023
 PrefabInstance:
   m_ObjectHideFlags: 0

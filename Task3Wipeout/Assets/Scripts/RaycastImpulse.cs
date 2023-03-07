@@ -27,7 +27,7 @@ public class RaycastImpulse : MonoBehaviour
 
             RaycastHit hitPoint;
             
-            if (Physics.Raycast(ray, out hitPoint, 100))
+            if (Physics.Raycast(ray, out hitPoint, 0.1f))
             {
                 if(hitPoint.rigidbody.CompareTag("Door"))
                 {

@@ -8,35 +8,30 @@ using UnityEngine;
 
 public class CheckPointManager : MonoBehaviour
 {
-    public bool inCP = false;
+    public CharacterMover player;
+    public List<GameObject> checkpoints;
 
-    private CharacterMover move;
-    
-    public List<GameObject> checkPoints;
-    public GameObject checkPoint;
-    private Vector3 spawn;
-    
+    public Vector3 dead;
+    public Vector3 newSpawn;
     private void Start()
     {
-        spawn = move.spawnPoint;
+        player = FindObjectOfType<CharacterMover>();
     }
 
     private void Update()
     {
-        if(gameObject.transform.position.y < -20f)
-        {
-            //gameObject.transform.position = spawn;
-            move.spawnPoint = spawn;
-        }
+       if(player.transform.position.y < -20)
+       {
+	       player.transform.position = newSpawn;
+       }
     }
-
+    
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("CheckPoint2"))
-        {
-            Debug.Log("went into checkpoint");
-            inCP = true;
-            spawn = checkPoint.transform.position;
-        }
+	    if(other.CompareTag("Player"))
+	    {
+		    if(Input.GetKeyDown(KeyCode.Z)) 
+			    newSpawn = player.transform.position;
+	    }
     }
 }

@@ -8,27 +8,16 @@ using UnityEngine;
 
 public class CallPlatform : MonoBehaviour
 {
+	private Animator animator;
 
-    public GameObject platform;
-    public Animator animator;
+	private void Start()
+	{
+		animator = gameObject.GetComponent<Animator>();
+	}
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.CompareTag("Player"))
-        {
-            
-        }
-    }
+	private void Update()
+	{
+		if(Input.GetKeyDown(KeyCode.E))
+			animator.SetTrigger("Active");
+	}
 }

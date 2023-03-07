@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+
+using TMPro;
+
 using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 
@@ -19,13 +22,14 @@ public class CharacterMover : MonoBehaviour
 
     public Vector3 spawnPoint = new Vector3(-28.67f, 6.33f, -22.56f);
 
+    public Vector3 respawnPoint = new Vector3(1.59f, 6.33f, 32.8f );
     private Animator animator;
     private Vector2 moveInput = new Vector2();
     private bool jumpInput;
 
     public bool isGrounded = false;
 
-    public GameObject UI;
+    public TextMeshProUGUI UI;
     
     // Start is called before the first frame update
     void Awake()
@@ -33,6 +37,8 @@ public class CharacterMover : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
         cam = Camera.main.transform;
+
+        respawnPoint = gameObject.transform.position;
     }
 
     // Update is called once per frame
@@ -54,22 +60,24 @@ public class CharacterMover : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //jumpVelocity = Mathf.Sqrt(2 * Physics.gravity.magnitude * jumpVelocity);
+
         
         if(Input.GetKeyDown(KeyCode.Z))
         {
             if(ragdoll != null)
             { 
                 ragdoll.ragdollOn = true;
+                UI.gameObject.SetActive(true);
             }
             else
             { 
-                gameObject.transform.position = spawnPoint; 
-                characterController.enabled = true; 
-                animator.enabled = true;
+                // gameObject.transform.position = spawnPoint; 
+                // characterController.enabled = true; 
+                // animator.enabled = true;
+                Respawn();
             }
         }
-        
-        //jumpVelocity = Mathf.Sqrt(2 * Physics.gravity.magnitude * jumpVelocity);
 
         Vector3 delta;
         Vector3 camForward = cam.forward;
@@ -126,26 +134,38 @@ public class CharacterMover : MonoBehaviour
         isGrounded = characterController.isGrounded;
     }
     
-   private void OnTriggerEnter(Collider other)
-   {
-       if(other.CompareTag("Player"))
-       {
-           if(Input.GetKeyDown(KeyCode.Z))
-           {
-               if(ragdoll != null)
-               { 
-                   ragdoll.ragdollOn = true;
-                   UI.gameObject.SetActive(false);
-               }
-               else
-               { 
-                   UI.gameObject.SetActive(true);
-                   gameObject.transform.position = spawnPoint; 
-                   characterController.enabled = true; 
-                   animator.enabled = true;
-               }
-           }
+  //private void OnTriggerEnter(Collider other)
+  //{
+  //    if(other.CompareTag("Player"))
+  //    {
+  //        if(Input.GetKeyDown(KeyCode.Z))
+  //        {
+  //            if(ragdoll != null)
+  //            { 
+  //                ragdoll.ragdollOn = true;
+  //                UI.gameObject.SetActive(true);
+  //            }
+  //            else
+  //            { 
+  //               // gameObject.transform.position = spawnPoint; 
+  //               // characterController.enabled = true; 
+  //               // animator.enabled = true;
+  //               Respawn();
+  //            }
+  //        }
+//
+  //    }
+  //}
 
-       }
+   public void SetSpawnPoint(Vector3 newPos)
+   {
+       respawnPoint = newPos;
+   }
+
+   public void Respawn()
+   {
+       gameObject.transform.position = spawnPoint;
+       characterController.enabled = true;
+       animator.enabled = true;
    }
 }
