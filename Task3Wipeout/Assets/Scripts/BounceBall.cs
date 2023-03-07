@@ -9,7 +9,7 @@ public class BounceBall : MonoBehaviour
 	{
 		if(other.CompareTag("Player"))
 		{ 
-			other.GetComponent<CharacterMover>().velocity = -other.GetComponent<CharacterMover>().velocity * 1;
+			other.GetComponent<CharacterMover>().velocity = -other.GetComponent<CharacterMover>().velocity * 1.2f;
 		}
 	}
 }

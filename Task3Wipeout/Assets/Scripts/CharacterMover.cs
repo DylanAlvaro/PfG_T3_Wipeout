@@ -10,7 +10,7 @@ using UnityEngine;
 public class CharacterMover : MonoBehaviour
 {
     public float movementSpeed = 2;
-    public float jumpVelocity = 2;
+    public float jumpVelocity = 2.5f;
     public Vector3 velocity;
 
     public Transform cam;
