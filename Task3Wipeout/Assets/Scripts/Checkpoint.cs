@@ -13,8 +13,8 @@ public class Checkpoint : MonoBehaviour
    private void OnTriggerEnter(Collider other)
    {
       if(other.CompareTag("Player"))
-      {
-            player.SetRespawnPoint(gameObject.transform.position + new Vector3(1, 0, 0));
+      { 
+         player.SetRespawnPoint(gameObject.transform.position + new Vector3(1, 0, 0));
       }
    }
 }
