@@ -60,8 +60,6 @@ public class CharacterMover : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //jumpVelocity = Mathf.Sqrt(2 * Physics.gravity.magnitude * jumpVelocity);
-
         
         if(Input.GetKeyDown(KeyCode.Z))
         {
@@ -71,10 +69,7 @@ public class CharacterMover : MonoBehaviour
                 UI.gameObject.SetActive(true);
             }
             else
-            { 
-                // gameObject.transform.position = spawnPoint; 
-                // characterController.enabled = true; 
-                // animator.enabled = true;
+            {
                 Respawn();
             }
         }
@@ -119,47 +114,17 @@ public class CharacterMover : MonoBehaviour
                 velocity -= 0.2f * horizontalHitDir / displacement;
             }
         }
-
         
-
-        //if(ragdoll.ragdollOn)
-        //    transform.forward = -camForward;
-        //if(!ragdoll.ragdollOn)
-         transform.forward = camForward;
-       //
-        
-        //delta += velocity * Time.fixedDeltaTime;
-
+        transform.forward = camForward;
+       
         characterController.Move(velocity * Time.deltaTime);
         isGrounded = characterController.isGrounded;
     }
     
-  //private void OnTriggerEnter(Collider other)
-  //{
-  //    if(other.CompareTag("Player"))
-  //    {
-  //        if(Input.GetKeyDown(KeyCode.Z))
-  //        {
-  //            if(ragdoll != null)
-  //            { 
-  //                ragdoll.ragdollOn = true;
-  //                UI.gameObject.SetActive(true);
-  //            }
-  //            else
-  //            { 
-  //               // gameObject.transform.position = spawnPoint; 
-  //               // characterController.enabled = true; 
-  //               // animator.enabled = true;
-  //               Respawn();
-  //            }
-  //        }
-//
-  //    }
-  //}
 
-   public void SetSpawnPoint(Vector3 newPos)
+   public void SetRespawnPoint(Vector3 newPos)
    {
-       respawnPoint = newPos;
+        spawnPoint = newPos;
    }
 
    public void Respawn()

@@ -19,14 +19,11 @@ public class RagdollTrigger : MonoBehaviour
   private void OnTriggerEnter(Collider other)
    {
       Ragdoll ragdoll = other.GetComponentInParent<Ragdoll>();
+      
       if(ragdoll != null)
       {
          ragdoll.ragdollOn = true; 
          characterController.enabled = false;
-      }
-      else
-      {
-         ragdoll.ragdollOn = false;
       }
    }
 
