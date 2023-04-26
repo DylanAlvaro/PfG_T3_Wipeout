@@ -5,42 +5,43 @@ using System.Collections.Generic;
 using TMPro;
 
 using UnityEngine;
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(CharacterController)), RequireComponent(typeof(Animator))]
 
 public class CharacterMover : MonoBehaviour
 {
+    // public fields
     public float movementSpeed = 2;
     public float jumpVelocity = 2.5f;
     public Vector3 velocity;
+    public float rotationSpeed = 10f;
 
-    public Transform cam;
-
-    public Transform target;
-    
-    [SerializeField] private CharacterController characterController;
-    private Ragdoll ragdoll;
-
-    public Vector3 spawnPoint = new Vector3(-28.67f, 6.33f, -22.56f);
-
-    public Vector3 respawnPoint = new Vector3(1.59f, 6.33f, 32.8f );
+    // set on awake
+    private Camera cam;
     private Animator animator;
+    private CharacterController characterController;
+
+    // private fields
+    private Ragdoll ragdoll;
+    private Vector2 _playerVelocity;
+    private Vector2 _smoothedPlayerVelocity;
+    private Vector3 spawnPoint = new Vector3(-28.67f, 6.33f, -22.56f);
+
+    // required for basic movement functionality
     private Vector2 moveInput = new Vector2();
     private bool jumpInput;
-
     public bool isGrounded = false;
+    private Vector2 _direction;
 
-    public TextMeshProUGUI UI;
-    
-    // Start is called before the first frame update
+
+    // public Vector3 respawnPoint = new Vector3(1.59f, 6.33f, 32.8f );
+
+   // Start is called before the first frame update
     void Awake()
     {
         characterController = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
-        cam = Camera.main.transform;
-
-        respawnPoint = gameObject.transform.position;
+        cam = Camera.main;
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -48,8 +49,8 @@ public class CharacterMover : MonoBehaviour
         moveInput.y = Input.GetAxis("Vertical");
         jumpInput = Input.GetButton("Jump");
         
-        animator.SetFloat("Forwards", moveInput.y);
-        animator.SetBool("Jump", !isGrounded);
+       animator.SetFloat("Forwards", moveInput.y);
+       animator.SetBool("Jump", !isGrounded);
     }
 
     public Vector3 hitDir;
@@ -60,13 +61,11 @@ public class CharacterMover : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
         if(Input.GetKeyDown(KeyCode.Z))
         {
             if(ragdoll != null)
             { 
                 ragdoll.ragdollOn = true;
-                UI.gameObject.SetActive(true);
             }
             else
             {
@@ -75,11 +74,11 @@ public class CharacterMover : MonoBehaviour
         }
 
         Vector3 delta;
-        Vector3 camForward = cam.forward;
+        Vector3 camForward = cam.transform.forward;
         camForward.y = 0;
         camForward.Normalize();
 
-        Vector3 camRight = cam.right;
+        Vector3 camRight = cam.transform.right;
         
         delta = (moveInput.x * camRight + moveInput.y * camForward) * movementSpeed;
 
@@ -117,8 +116,11 @@ public class CharacterMover : MonoBehaviour
         
         transform.forward = camForward;
        
-        characterController.Move(velocity * Time.deltaTime);
-        isGrounded = characterController.isGrounded;
+       characterController.Move(velocity * Time.deltaTime);
+       isGrounded = characterController.isGrounded;
+       
+       Quaternion rotation = Quaternion.Euler(0, cam.transform.eulerAngles.y, 0);
+       transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.fixedDeltaTime * rotationSpeed);
     }
     
 

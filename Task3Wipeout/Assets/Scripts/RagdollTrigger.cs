@@ -9,7 +9,7 @@ using UnityEngine.Serialization;
 
 public class RagdollTrigger : MonoBehaviour
 {
-  [SerializeField] private CharacterController characterController;
+  [SerializeField] private CharacterController[] characterController;
   [SerializeField] private Camera camera;
   private Ragdoll ragdoll;
 
@@ -19,12 +19,16 @@ public class RagdollTrigger : MonoBehaviour
   private void OnTriggerEnter(Collider other)
    {
       Ragdoll ragdoll = other.GetComponentInParent<Ragdoll>();
-      
-      if(ragdoll != null)
+
+      for(int i = 0; i < characterController.Length; i++)
       {
-         ragdoll.ragdollOn = true; 
-         characterController.enabled = false;
+	      if(ragdoll != null)
+	      {
+		      ragdoll.ragdollOn = true; 
+		      characterController[i].enabled = false;
+	      }
       }
+     
    }
 
    
