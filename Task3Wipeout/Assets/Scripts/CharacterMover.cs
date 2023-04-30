@@ -50,7 +50,7 @@ public class CharacterMover : MonoBehaviour
         moveInput.y = Input.GetAxis("Vertical");
         jumpInput = Input.GetButton("Jump");
         
-       animator.SetFloat("Forwards", moveInput.y);
+       animator.SetFloat("Forwards", moveInput.y, 0.1f, Time.deltaTime);
        animator.SetBool("Jump", !isGrounded);
 
        if (!isJumping)
