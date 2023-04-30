@@ -2,29 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-using Unity.VisualScripting;
-
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    // variables
     private float camSpeed = 360;
     public float distance = 5;
     public Transform target;
     public float currentDistance;
-
-    public List<Transform> objectsToFollow;
-    public int currentCharaterList = 0;
-
     public Ragdoll ragdoll;
-
     public float heightOffset = 1.5f;
-    
-   
-    
-    private Vector2 moveInput = new Vector2();
-   
-    
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,35 +44,23 @@ public class CameraController : MonoBehaviour
         {
             currentDistance = Mathf.MoveTowards(currentDistance, distance, Time.deltaTime);
         }
-
-       // transform.position = GetTargetPosition() - distance * transform.forward;
-
-        if(objectsToFollow.Count > 0)
-        {
-            transform.position = new Vector3(objectsToFollow[currentCharaterList].position.x,
-                                             objectsToFollow[currentCharaterList].position.y,
-                                             objectsToFollow[currentCharaterList].position.z
-                                            );
-        }
+        
+        transform.position = GetTargetPosition() - distance * transform.forward;
     }
     
-    private Vector3 GetTargetPosition()
+    /// <summary>
+    /// Camera follows player
+    /// </summary>
+    /// <returns></returns>
+    Vector3 GetTargetPosition()
     {
-        if(objectsToFollow[currentCharaterList].GetComponent<Ragdoll>().ragdollOn)
+        if(target.GetComponent<Ragdoll>().ragdollOn)
         {
-           return objectsToFollow[currentCharaterList].GetChild(0).GetChild(1).transform.position + heightOffset * Vector3.up;
+            return target.GetChild(0).GetChild(1).transform.position + heightOffset * Vector3.up;
         }
         else
         { 
-            return objectsToFollow[currentCharaterList].position + heightOffset * Vector3.up;
-        }
-    }
-
-    public void SetCurrentPlayer(int index)
-    {
-        if(index < objectsToFollow.Count)
-        {
-            currentCharaterList = index;
+            return target.position + heightOffset * Vector3.up;
         }
     }
 }

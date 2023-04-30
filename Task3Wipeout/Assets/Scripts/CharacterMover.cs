@@ -31,6 +31,7 @@ public class CharacterMover : MonoBehaviour
     private bool jumpInput;
     public bool isGrounded = false;
     private Vector2 _direction;
+    private bool isJumping;
 
 
     // public Vector3 respawnPoint = new Vector3(1.59f, 6.33f, 32.8f );
@@ -51,6 +52,13 @@ public class CharacterMover : MonoBehaviour
         
        animator.SetFloat("Forwards", moveInput.y);
        animator.SetBool("Jump", !isGrounded);
+
+       if (!isJumping)
+       {
+           SetAnimationActiveLayer(animator, 1, 0, Time.fixedDeltaTime, 10);
+           SetAnimationActiveLayer(animator, 2, 0, Time.fixedDeltaTime, 10);
+           
+       }
     }
 
     public Vector3 hitDir;
@@ -61,6 +69,8 @@ public class CharacterMover : MonoBehaviour
 
     private void FixedUpdate()
     {
+        
+        // if the player dies and goes into ragdoll pressing Z will take you back to the respawn point 
         if(Input.GetKeyDown(KeyCode.Z))
         {
             if(ragdoll != null)
@@ -123,16 +133,36 @@ public class CharacterMover : MonoBehaviour
        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.fixedDeltaTime * rotationSpeed);
     }
     
-
+    
+    /// <summary>
+    /// Set Respawn point for if the player enters a checkpoint
+    /// </summary>
+    /// <param name="newPos"></param>
    public void SetRespawnPoint(Vector3 newPos)
    {
         spawnPoint = newPos;
    }
 
+   /// <summary>
+   /// Respawn functionality
+   /// </summary>
    public void Respawn()
    {
        gameObject.transform.position = spawnPoint;
        characterController.enabled = true;
        animator.enabled = true;
+   }
+   
+   /// <summary>
+   ///  Gets the different animation layers. 
+   /// </summary>
+   /// <param name="animator"></param>
+   /// <param name="layer"></param>
+   /// <param name="transitionValue"></param>
+   /// <param name="dt"></param>
+   /// <param name="rateOfChange"></param>
+   private void SetAnimationActiveLayer(Animator animator, int layer, int transitionValue, float dt, float rateOfChange)
+   {
+       animator.SetLayerWeight(layer, Mathf.Lerp(animator.GetLayerWeight(layer), transitionValue, dt * rateOfChange));
    }
 }
