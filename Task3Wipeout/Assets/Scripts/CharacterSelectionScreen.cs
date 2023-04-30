@@ -5,27 +5,101 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class CharacterSelectionScreen : MonoBehaviour
 {
     public Material[] material;
-    public Renderer[] objRender;
-    public int[] currentMatIndex;
+    public Renderer[] characterRender;
+    private int[] currentMatIndex;
+    
+    // Cameras
+    public Camera characterSelectCam;
+    public Camera MainCamera;
+   
+    public Transform teleportToStart;
+    public GameObject UI;
+    public CharacterMover player;
+
+    public Slider smoothnessSlider;
+    public Slider MetalicSlider;
+
+    public GameObject particleSystem;
+
+    private Color[] _colors;
+    
+    [Range(0, 1)]
+    public float smoothness;
+    [Range(0, 1)]
+    public float metalic;
+    
+    private bool isInCharacterCustomize = true;
     private void Start()
     {
-        currentMatIndex = new int[objRender.Length];
+        characterSelectCam.gameObject.SetActive(true);
+        MainCamera.gameObject.SetActive(false);
+        UI.SetActive(true);
+       
+        currentMatIndex = new int[characterRender.Length];
 
-        for(int i = 0; i < objRender.Length; i++)
+        for(int i = 0; i < characterRender.Length; i++)
         {
-            objRender[i].material = material[currentMatIndex[i]];
+            characterRender[i].material = material[currentMatIndex[i]];
         }
     }
 
-    public void ChangeColor(int index)
+    private void Update()
+    {
+        if (!isInCharacterCustomize)
+        {
+            Vector3 offset = new Vector3(0, 2, -5);
+            MainCamera.transform.position = player.transform.position + offset;
+            MainCamera.transform.LookAt(player.transform.position);
+        }
+    }
+
+    /// <summary>
+    /// When the user presses on the confirm button in game this teleport function is called and the firs
+    /// </summary>
+    public void Teleport()
+    {
+        player.transform.position = teleportToStart.transform.position;
+        
+        characterSelectCam.gameObject.SetActive(false);
+        MainCamera.gameObject.SetActive(true);
+        
+        UI.SetActive(false);
+
+        isInCharacterCustomize = false;
+    }
+
+    public void ChangeShader(int index)
     {
         currentMatIndex[index] = (currentMatIndex[index] + 1) % material.Length;
-        objRender[index].material = material[currentMatIndex[index]];
+        characterRender[index].material = material[currentMatIndex[index]];
+    }
+    
+    public void ChangeSmoothness()
+    {
+        smoothness = smoothnessSlider.value; 
+        material[0].SetFloat("_Smoothness", smoothness);
+        material[1].SetFloat("_Smoothness", smoothness);
+        material[2].SetFloat("_Smoothness", smoothness);
+    }
+    
+    public void ChangeMetalic()
+    {
+        metalic = MetalicSlider.value; 
+        material[0].SetFloat("_Metalic", metalic);
+        material[1].SetFloat("_Metalic", metalic);
+        material[2].SetFloat("_Metalic", metalic);
+    }
+
+    public void EnableParticleSystem()
+    {
+        Instantiate(particleSystem, transform.position, transform.rotation);
+        Debug.Log("PS Enabled");
     }
 }
