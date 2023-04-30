@@ -87,6 +87,9 @@ public class CharacterSelectionScreen : MonoBehaviour
         material[0].SetFloat("_Smoothness", smoothness);
         material[1].SetFloat("_Smoothness", smoothness);
         material[2].SetFloat("_Smoothness", smoothness);
+        material[3].SetFloat("_Smoothness", smoothness);
+        material[4].SetFloat("_Smoothness", smoothness);
+        material[5].SetFloat("_Smoothness", smoothness);
     }
     
     public void ChangeMetalic()
@@ -95,6 +98,9 @@ public class CharacterSelectionScreen : MonoBehaviour
         material[0].SetFloat("_Metalic", metalic);
         material[1].SetFloat("_Metalic", metalic);
         material[2].SetFloat("_Metalic", metalic);
+        material[3].SetFloat("_Smoothness", smoothness);
+        material[4].SetFloat("_Smoothness", smoothness);
+        material[5].SetFloat("_Smoothness", smoothness);
     }
 
     public void EnableParticleSystem()
