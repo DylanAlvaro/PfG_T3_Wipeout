@@ -7,11 +7,12 @@ TagManager:
   - CheckPoint2
   - Door
   - CheckPoint
+  - Floor
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Floor
   - Water
   - UI
   - 

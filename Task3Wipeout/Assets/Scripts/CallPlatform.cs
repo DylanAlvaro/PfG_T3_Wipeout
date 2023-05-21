@@ -9,15 +9,23 @@ using UnityEngine;
 public class CallPlatform : MonoBehaviour
 {
 	private Animator animator;
+	private CharacterMover player;
+	private float raycastDst = 100f;
 
 	private void Start()
 	{
 		animator = gameObject.GetComponent<Animator>();
 	}
 
-	private void Update()
+	private void OnTriggerEnter(Collider other)
 	{
-		if(Input.GetKeyDown(KeyCode.E))
-			animator.SetTrigger("Active");
+		RaycastHit hit;
+		if (Physics.Raycast(player.transform.position, Vector3.down, out hit, raycastDst))
+		{
+			if (other.CompareTag("Floor"))
+			{
+				animator.SetTrigger("Active");
+			}
+		}
 	}
 }
