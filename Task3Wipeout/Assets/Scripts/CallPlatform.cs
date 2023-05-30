@@ -9,8 +9,8 @@ using UnityEngine;
 public class CallPlatform : MonoBehaviour
 {
 	private Animator animator;
-	private CharacterMover player;
-	private float raycastDst = 100f;
+	public CharacterController player;
+	private static readonly int active = Animator.StringToHash("Active");
 
 	private void Start()
 	{
@@ -19,13 +19,9 @@ public class CallPlatform : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		RaycastHit hit;
-		if (Physics.Raycast(player.transform.position, Vector3.down, out hit, raycastDst))
+		if(other.CompareTag("playerPoint"))
 		{
-			if (other.CompareTag("Floor"))
-			{
-				animator.SetTrigger("Active");
-			}
+			animator.SetTrigger(active);
 		}
 	}
 }

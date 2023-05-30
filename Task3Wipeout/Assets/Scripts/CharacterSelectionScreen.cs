@@ -15,6 +15,11 @@ public class CharacterSelectionScreen : MonoBehaviour
     public Renderer[] characterRender;
     private int[] currentMatIndex;
     
+    // color sliders
+    public Slider red;
+    public Slider blue;
+    public Slider green;
+    
     // Cameras
     public Camera characterSelectCam;
     public Camera MainCamera;
@@ -107,5 +112,20 @@ public class CharacterSelectionScreen : MonoBehaviour
     {
         Instantiate(particleSystem, transform.position, transform.rotation);
         Debug.Log("PS Enabled");
+    }
+
+    public void ChangeColorSliders(int index)
+    {
+        currentMatIndex = new int[characterRender.Length];
+
+        for(int i = 0; i < characterRender.Length; i++)
+        {
+            Color color = characterRender[index].material.color;
+            color.r = red.value;
+            color.g = green.value;
+            color.b = blue.value;
+            characterRender[index].material.color = color;
+            characterRender[index].material.SetColor("_EmissionColor", color);
+        }
     }
 }

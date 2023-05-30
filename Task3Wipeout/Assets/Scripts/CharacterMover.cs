@@ -50,15 +50,9 @@ public class CharacterMover : MonoBehaviour
         moveInput.y = Input.GetAxis("Vertical");
         jumpInput = Input.GetButton("Jump");
         
-       animator.SetFloat("Forwards", moveInput.y, 0.1f, Time.deltaTime);
-       animator.SetBool("Jump", !isGrounded);
-
-       if (!isJumping)
-       {
-           SetAnimationActiveLayer(animator, 1, 0, Time.fixedDeltaTime, 10);
-           SetAnimationActiveLayer(animator, 2, 0, Time.fixedDeltaTime, 10);
-           
-       }
+        animator.SetFloat("Forwards", moveInput.x, 0.1f, Time.deltaTime);
+        animator.SetFloat("Blend", moveInput.y, 0.1f, Time.deltaTime); 
+        animator.SetBool("Jump", !isGrounded);
     }
 
     public Vector3 hitDir;
