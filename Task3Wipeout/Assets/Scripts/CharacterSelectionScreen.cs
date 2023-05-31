@@ -31,18 +31,25 @@ public class CharacterSelectionScreen : MonoBehaviour
     public Slider smoothnessSlider;
     public Slider MetalicSlider;
     public Slider forceFieldSlider;
+    public Slider dissolveSlider;
 
     public GameObject particleSystem;
 
     private Color[] _colors;
+
+    public float originalSmoothness = 0;
+    public float originalMetallic = 0;
     
+    
+
     [Range(0, 1)]
     public float smoothness;
     [Range(0, 1)]
     public float metalic;
-
     [Range(0, 1)] 
     public float forceField;
+    [Range(0, 1)] 
+    public float dissolve;
     
     private bool isInCharacterCustomize = true;
     private void Start()
@@ -50,7 +57,10 @@ public class CharacterSelectionScreen : MonoBehaviour
         characterSelectCam.gameObject.SetActive(true);
         MainCamera.gameObject.SetActive(false);
         UI.SetActive(true);
-       
+
+        smoothnessSlider.value = originalSmoothness;
+        MetalicSlider.value = originalMetallic;
+        
         currentMatIndex = new int[characterRender.Length];
 
         for(int i = 0; i < characterRender.Length; i++)
@@ -90,6 +100,9 @@ public class CharacterSelectionScreen : MonoBehaviour
         characterRender[index].material = material[currentMatIndex[index]];
     }
     
+    /// <summary>
+    /// changes smoothness of materials
+    /// </summary>
     public void ChangeSmoothness()
     {
         smoothness = smoothnessSlider.value; 
@@ -100,7 +113,14 @@ public class CharacterSelectionScreen : MonoBehaviour
         material[4].SetFloat("_Smoothness", smoothness);
         material[5].SetFloat("_Smoothness", smoothness);
     }
+
+    public void ChangeDissolve()
+    {
+        dissolve = dissolveSlider.value;
+        material[2].SetFloat("_ClippingVal", dissolve);
+    }
     
+    // changes metallic of materials
     public void ChangeMetalic()
     {
         metalic = MetalicSlider.value; 
@@ -123,16 +143,18 @@ public class CharacterSelectionScreen : MonoBehaviour
         material[5].SetFloat("_ForceField", forceField);
     }
 
+    // enables the particle system 
     public void EnableParticleSystem()
     {
         Instantiate(particleSystem, transform.position, transform.rotation);
         Debug.Log("PS Enabled");
     }
 
+    // change rgb colors of materials
     public void ChangeColorSliders(int index)
     {
         currentMatIndex = new int[characterRender.Length];
-
+        
         for(int i = 0; i < characterRender.Length; i++)
         {
             Color color = characterRender[index].material.color;

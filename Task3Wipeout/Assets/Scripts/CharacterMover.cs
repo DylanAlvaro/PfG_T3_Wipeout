@@ -32,9 +32,7 @@ public class CharacterMover : MonoBehaviour
     public bool isGrounded = false;
     private Vector2 _direction;
     private bool isJumping;
-
-
-    // public Vector3 respawnPoint = new Vector3(1.59f, 6.33f, 32.8f );
+    
 
    // Start is called before the first frame update
     void Awake()

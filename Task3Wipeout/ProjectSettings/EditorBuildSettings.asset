@@ -9,9 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 97f8234be9de9e3449f8cb426bc6e399
   - enabled: 1
-    path: Assets/Scenes/PhysicsForGamesT3.unity
-    guid: 9b4b77975aeb99e43acd5cf59c91171d
-  - enabled: 0
     path: Assets/Scenes/Standard.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

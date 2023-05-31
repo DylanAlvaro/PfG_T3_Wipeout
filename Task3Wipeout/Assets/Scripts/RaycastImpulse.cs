@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using DefaultNamespace;
 using UnityEditor;
 
 using UnityEngine;
@@ -11,17 +11,18 @@ public class RaycastImpulse : MonoBehaviour
     public float hitForce = 500;
     public Ray ray;
     public Vector3 offset;
-    
-    // Start is called before the first frame update
-    void Start()
+    private Camera _camera;
+
+    private Rigidbody rb;
+
+    private void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-   // void Update()
+    // private void OnTriggerEnter(Collider other)
    // {
-   //     if (Input.GetMouseButtonDown(0))
+   //     if (other.CompareTag("Door"))
    //     {
    //         ray = new Ray(transform.position + offset, transform.forward);
 //
@@ -33,32 +34,34 @@ public class RaycastImpulse : MonoBehaviour
    //             {
    //                 hitPoint.rigidbody.AddForce(ray.direction * hitForce);
    //             }
-   //             
-   //            Rigidbody rb = hitPoint.collider.GetComponent<Rigidbody>();
-   //            if(rb != null)
    //         }
    //     }
    // }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Door"))
-        {
-            ray = new Ray(transform.position + offset, transform.forward);
+   private void OnTriggerEnter(Collider other)
+   {
+       if (other.CompareTag("Door"))
+       {
+           if (Input.GetMouseButtonDown(0))
+           {
+               Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
-            RaycastHit hitPoint;
-            
-            if (Physics.Raycast(ray, out hitPoint, 0.1f))
-            {
-                if(hitPoint.rigidbody.CompareTag("Door"))
-                {
-                    hitPoint.rigidbody.AddForce(ray.direction * hitForce);
-                }
-            }
-        }
-    }
+               if (Physics.Raycast(ray, out RaycastHit hit))
+               {
+                   if(hit.collider.gameObject.GetComponent<Door>() != null)
+                   {
+                       Vector3 distToTarget = hit.point - transform.position;
+                       Vector3 forceDir = distToTarget.normalized;
+                       
+                       rb.AddForce(forceDir * hitForce, ForceMode.Impulse);
+                   }
+               }
+           }
+       }
+   }
 
-    private void OnDrawGizmos()
+
+   private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawRay(ray);
