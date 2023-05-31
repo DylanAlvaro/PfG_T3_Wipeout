@@ -19,9 +19,30 @@ public class RaycastImpulse : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+   // void Update()
+   // {
+   //     if (Input.GetMouseButtonDown(0))
+   //     {
+   //         ray = new Ray(transform.position + offset, transform.forward);
+//
+   //         RaycastHit hitPoint;
+   //         
+   //         if (Physics.Raycast(ray, out hitPoint, 0.1f))
+   //         {
+   //             if(hitPoint.rigidbody.CompareTag("Door"))
+   //             {
+   //                 hitPoint.rigidbody.AddForce(ray.direction * hitForce);
+   //             }
+   //             
+   //            Rigidbody rb = hitPoint.collider.GetComponent<Rigidbody>();
+   //            if(rb != null)
+   //         }
+   //     }
+   // }
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (Input.GetMouseButtonDown(0))
+        if (other.CompareTag("Door"))
         {
             ray = new Ray(transform.position + offset, transform.forward);
 
@@ -33,9 +54,6 @@ public class RaycastImpulse : MonoBehaviour
                 {
                     hitPoint.rigidbody.AddForce(ray.direction * hitForce);
                 }
-                
-               // Rigidbody rb = hitPoint.collider.GetComponent<Rigidbody>();
-               // if(rb != null)
             }
         }
     }

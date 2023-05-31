@@ -17,11 +17,23 @@ public class CallPlatform : MonoBehaviour
 		animator = gameObject.GetComponent<Animator>();
 	}
 
+	/// <summary>
+	/// animation plays when players 'playerpoint' colliders with the platform
+	/// </summary>
+	/// <param name="other"></param>
 	private void OnTriggerEnter(Collider other)
 	{
 		if(other.CompareTag("playerPoint"))
 		{
-			animator.SetTrigger(active);
+			animator.SetBool("isActive", true);
+		}
+	}
+
+	private void OnTriggerExit(Collider other)
+	{
+		if (other.CompareTag("playerPoint"))
+		{
+			animator.SetBool("isActive", false);
 		}
 	}
 }

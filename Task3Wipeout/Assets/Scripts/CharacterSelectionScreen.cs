@@ -30,6 +30,7 @@ public class CharacterSelectionScreen : MonoBehaviour
 
     public Slider smoothnessSlider;
     public Slider MetalicSlider;
+    public Slider forceFieldSlider;
 
     public GameObject particleSystem;
 
@@ -39,6 +40,9 @@ public class CharacterSelectionScreen : MonoBehaviour
     public float smoothness;
     [Range(0, 1)]
     public float metalic;
+
+    [Range(0, 1)] 
+    public float forceField;
     
     private bool isInCharacterCustomize = true;
     private void Start()
@@ -103,9 +107,20 @@ public class CharacterSelectionScreen : MonoBehaviour
         material[0].SetFloat("_Metalic", metalic);
         material[1].SetFloat("_Metalic", metalic);
         material[2].SetFloat("_Metalic", metalic);
-        material[3].SetFloat("_Smoothness", smoothness);
-        material[4].SetFloat("_Smoothness", smoothness);
-        material[5].SetFloat("_Smoothness", smoothness);
+        material[3].SetFloat("_Metalic", metalic);
+        material[4].SetFloat("_Metalic", metalic);
+        material[5].SetFloat("_Metalic", metalic);
+    }
+
+    public void ChangeForceFieldValues()
+    {
+        forceField = forceFieldSlider.value;
+        material[0].SetFloat("_ForceField", forceField);
+        material[1].SetFloat("_ForceField", forceField);
+        material[2].SetFloat("_ForceField", forceField);
+        material[3].SetFloat("_ForceField", forceField);
+        material[4].SetFloat("_ForceField", forceField);
+        material[5].SetFloat("_ForceField", forceField);
     }
 
     public void EnableParticleSystem()
