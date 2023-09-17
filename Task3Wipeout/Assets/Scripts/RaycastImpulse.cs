@@ -19,26 +19,8 @@ public class RaycastImpulse : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
     }
-
-    // private void OnTriggerEnter(Collider other)
-   // {
-   //     if (other.CompareTag("Door"))
-   //     {
-   //         ray = new Ray(transform.position + offset, transform.forward);
-//
-   //         RaycastHit hitPoint;
-   //         
-   //         if (Physics.Raycast(ray, out hitPoint, 0.1f))
-   //         {
-   //             if(hitPoint.rigidbody.CompareTag("Door"))
-   //             {
-   //                 hitPoint.rigidbody.AddForce(ray.direction * hitForce);
-   //             }
-   //         }
-   //     }
-   // }
-
-   private void OnTriggerEnter(Collider other)
+    
+    private void OnTriggerEnter(Collider other)
    {
        if (other.CompareTag("Door"))
        {
