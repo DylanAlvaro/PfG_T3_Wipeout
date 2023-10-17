@@ -9,6 +9,7 @@ TagManager:
   - CheckPoint
   - Floor
   - playerPoint
+  - PennEnd
   layers:
   - Default
   - TransparentFX
